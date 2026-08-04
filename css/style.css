@@ -1,0 +1,27 @@
+/* css/style.css */
+body {
+    background-color: #f4f7f6;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Custom Card untuk Tampilan Modern */
+.card-modern {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Penyesuaian Warna Dasar (Biru Letris & Aksen Emas) */
+.bg-letris-primary { background-color: #0056b3 !important; color: #fff; }
+.text-letris-primary { color: #0056b3 !important; }
+.text-letris-gold { color: #ffc107 !important; }
+
+/* Styling Animasi Loading */
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+}

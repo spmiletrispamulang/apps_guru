@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manajemen Kelas | Portal Guru Letris Pamulang</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="img/logo.png" type="image/png">
+
+  <!-- Google Font & Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  
+  <!-- Custom CSS Global -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* Styling khusus Tab agar menyatu dengan border Card */
+    .nav-tabs .nav-link.active { 
+        border-top: 3px solid #0056b3; 
+        color: #0056b3; 
+        font-weight: bold; 
+    }
+    .nav-tabs .nav-link { color: #6c757d; font-weight: 500; }
+    .student-row:hover { background-color: #f8f9fa; }
+  </style>
+</head>
+<!-- Ubah class body menjadi layout-top-nav -->
+<body class="hold-transition layout-top-nav">
+<div class="wrapper">
+  
+  <!-- Navbar Minimalis dengan Container -->
+  <nav class="main-header navbar navbar-expand-md navbar-white navbar-light border-bottom shadow-sm">
+    <div class="container">
+      <a href="dashboard.html" class="navbar-brand text-letris-primary font-weight-bold">
+          <i class="fas fa-arrow-left mr-2"></i>
+          <span class="brand-text">Dashboard</span>
+      </a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a href="rekap.html" class="btn btn-outline-info btn-sm rounded-pill px-3 shadow-sm font-weight-bold mt-1">
+            <i class="fas fa-history mr-1"></i> Rekap Absensi
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Content Wrapper mt-4 agar jaraknya pas -->
+  <div class="content-wrapper mt-4">
+    <div class="content-header">
+      <div class="container">
+        <div class="d-flex align-items-center mb-3">
+            <div class="mr-3 bg-letris-primary p-3 rounded shadow-sm text-white text-center" style="min-width: 80px;">
+                <h3 class="m-0 font-weight-bold" id="kelasTitle">-</h3>
+                <small>Kelas</small>
+            </div>
+            <div>
+                <h4 class="m-0 font-weight-bold text-dark">Manajemen Kelas</h4>
+                <p class="text-muted mb-0" id="mapelTitle">Mata Pelajaran: -</p>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="container">
+        
+        <div class="card card-modern">
+          <div class="card-header p-0 border-bottom-0">
+            <ul class="nav nav-tabs px-3 pt-3" id="kelasTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="tab-absensi" data-toggle="pill" href="#content-absensi" role="tab">
+                  <i class="fas fa-clipboard-list mr-1"></i> Input Absensi
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="tab-jurnal" data-toggle="pill" href="#content-jurnal" role="tab">
+                  <i class="fas fa-book-open mr-1"></i> Jurnal Mengajar
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="tab-materi" data-toggle="pill" href="#content-materi" role="tab">
+                  <i class="fas fa-folder-open mr-1"></i> Bank Materi
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="card-body">
+            <div class="tab-content" id="kelasTabContent">
+              
+              <!-- TAB ABSENSI -->
+              <div class="tab-pane fade show active" id="content-absensi" role="tabpanel">
+                <form id="formAbsensi">
+                  <div class="row mb-4">
+                    <div class="col-md-4">
+                      <label class="text-muted">Tanggal Pertemuan</label>
+                      <input type="date" class="form-control shadow-sm" id="tanggalAbsensi" required>
+                    </div>
+                  </div>
+                  
+                  <div id="loaderSiswa" class="loader-container py-4">
+                    <div class="spinner-border text-letris-primary mb-2" role="status"></div>
+                    <span class="text-muted">Menarik daftar siswa...</span>
+                  </div>
+                  
+                  <div id="daftarSiswaContainer" class="d-none">
+                    <!-- Daftar Siswa dilooping di sini via JS -->
+                  </div>
+                  
+                  <div class="mt-4 border-top pt-3 text-right">
+                    <button type="submit" id="btnSimpanAbsensi" class="btn bg-letris-primary px-4 shadow-sm font-weight-bold d-none">
+                        <i class="fas fa-save mr-2"></i> Simpan Data Absensi
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- TAB JURNAL MENGAJAR -->
+              <div class="tab-pane fade" id="content-jurnal" role="tabpanel">
+                <form id="formJurnal">
+                  <div class="row">
+                    <div class="col-md-4 form-group">
+                      <label class="text-muted">Tanggal Jurnal</label>
+                      <input type="date" class="form-control shadow-sm" id="tanggalJurnal" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="text-muted">Materi Pembahasan</label>
+                    <textarea class="form-control shadow-sm" id="materiJurnal" rows="3" placeholder="Contoh: Bab 1 - Pengenalan Dasar" required></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label class="text-muted">Catatan Tambahan <small>(Opsional)</small></label>
+                    <textarea class="form-control shadow-sm" id="catatanJurnal" rows="2" placeholder="Tugas, PR, atau catatan perilaku siswa..."></textarea>
+                  </div>
+                  <div class="mt-4 border-top pt-3 text-right">
+                    <button type="submit" id="btnSimpanJurnal" class="btn bg-letris-primary px-4 shadow-sm font-weight-bold">
+                        <i class="fas fa-save mr-2"></i> Simpan Jurnal Mengajar
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- TAB MATERI PEMBELAJARAN -->
+              <div class="tab-pane fade" id="content-materi" role="tabpanel">
+                <div id="loaderMateri" class="loader-container py-4 d-none">
+                  <div class="spinner-border text-letris-primary mb-2" role="status"></div>
+                  <span class="text-muted">Mencari materi...</span>
+                </div>
+                
+                <div class="row" id="materiContainer">
+                  <!-- Kartu materi dimuat di sini -->
+                </div>
+                
+                <div id="materiEmptyState" class="text-center py-5 text-muted">
+                    <i class="fas fa-folder-open fa-3x mb-3 text-light"></i>
+                    <h5>Materi belum dimuat</h5>
+                    <p>Materi akan otomatis ditarik dari database saat tab ini diklik.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- jQuery & Bootstrap -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+<!-- Scripts Modular -->
+<script src="js/config.js"></script>
+<script src="js/kelas.js"></script>
+
+</body>
+</html>
